@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 function Header() {
     return (
-        <nav ClassName="navbar navbar-expand-sm navbar-light bg-light">
-            <div ClassName="container-fluid">
-                <button ClassName="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span ClassName="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div ClassName="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a ClassName="navbar-brand" href="#">Lead Manager</a>
-                <ul ClassName="navbar-nav me-auto mb-2 mb-lg-0">
-                </ul>
-            </div>
-        </nav>
+        <Fragment>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div className="container">
+                    <Link className="navbar-brand" to="/">Lead Manager</Link>
+                    <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+                        <li className="nav-item">
+                            <Link className="navbar-brand" to="/form">Form</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="navbar-brand" to="/register">Register</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="navbar-brand" to="/login">Login</Link>         
+                        </li>
+                    </ul>
+                   
+                </div>
+            </nav>
+        </Fragment>
     )
 }
 

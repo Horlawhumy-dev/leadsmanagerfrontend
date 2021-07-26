@@ -17,9 +17,9 @@ class Leads extends Component {
     // }
     render() {
         return (
-            <div className="container">
+            <div className="container mt-5">
                 <h1 classNam="h1">Leads Manager</h1>
-                <table className="table mt-4">
+                <table className="table ">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>

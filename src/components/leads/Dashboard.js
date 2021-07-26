@@ -1,18 +1,13 @@
-import React, {Fragment} from 'react'
-import { Route } from 'react-router-dom';
-import { Switch} from 'react-router';
+import React from 'react'
 import Form from './Form';
 import Leads from './Leads';
 
 function Dashboard() {
     return (
-        <Fragment>
-        <Switch>
-            <Route path="/form" component={Form}/> 
-            <Route  exact path="/" component={Leads} />
-        </Switch>
-        </Fragment>
-        
+        <div className="container">
+            <Form />
+            <Leads />
+        </div>
     )
 }
 

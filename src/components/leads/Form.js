@@ -34,6 +34,7 @@ class Form extends Component {
         const { name, email, message } = this.state;
         return (
             <Fragment>
+                <h3>Add Lead</h3>
                 <form method="POST" onSubmit={this.onSubmit}>
                 <div className="form-group">
                     <label for="exampleInputEmail1">Name</label>

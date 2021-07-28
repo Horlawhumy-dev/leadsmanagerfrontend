@@ -1,25 +1,52 @@
-import React, { Fragment } from 'react';
+import React, {Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-function Header() {
-    return (
-        <Fragment>
-            <nav className="navbar navbar-expand-lg navbar-blue bg-light">
-                <div className="container">
-                    <Link className="navbar-brand" to="/">Lead Manager</Link>
-                    <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-                        <li className="nav-item">
-                            <Link className="navbar-brand" to="/register">Register</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="navbar-brand" to="/login">Login</Link>         
-                        </li>
-                    </ul>
-                   
-                </div>
-            </nav>
-        </Fragment>
-    )
+
+class Header extends Component {
+    static propTypes = {
+        auth: PropTypes.object.isRequired
+    }
+
+    render() {
+        const { isAuthenticated, user } = this.props.auth;
+
+        const authLinks = (
+            <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li className="nav-item">
+                    <button className="nav-link btn-info btn-sm text-light">Logout</button>
+                </li>
+            </ul>
+        )
+
+        const guestLinks = (
+            <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li className="nav-item">
+                    <Link className="navbar-brand" to="/register">Register</Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="navbar-brand" to="/">Login</Link>         
+                </li>
+            </ul>
+        )
+        return ( 
+            <Fragment>
+                <nav className="navbar navbar-expand-lg navbar-blue bg-light">
+                    <div className="container">
+                        <Link className="navbar-brand" to="/dashboard">Lead Manager</Link>
+                        { isAuthenticated ? authLinks : guestLinks}
+                    </div>
+                </nav>
+            </Fragment>
+        )
+    }
+  
 }
-
-export default Header;
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+export default connect(mapStateToProps)(Header);
+// <li className="nav-item">
+//                     <button className="nav-link btn-info btn-sm text-light">Logout</button>
+//                 </li>

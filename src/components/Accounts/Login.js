@@ -1,20 +1,42 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom';
+import {Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {login} from '../../Store/actions/auth'
+import PropTypes from 'prop-types'
+
+
+
+
 export class Login extends Component {
     state = {
         username: "",
-        password1: "",
+        password: "",
     }
+
+    static propTypes = {
+        login: PropTypes.func.isRequired,
+        isAuthenticated: PropTypes.bool
+    }
+
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value})
     }
+
     onSubmit = e => {
         e.preventDefault();
-        console.log(this.state);
+        this.props.login(this.state.username, this.state.password)
+
+        this.setState({
+            username: '',
+            password: ''
+        })
     }
     
     render() {
-        const {username, password1} = this.state;
+        if(this.props.isAuthenticated){
+            return <Redirect to="/dashboard" />
+        }
+        const {username, password} = this.state;
         return (
             <div className="container">
                 <h3>Log In</h3>
@@ -35,8 +57,8 @@ export class Login extends Component {
                             type="password"
                             className="form-control" 
                             id="exampleFormControlTextarea1"
-                            value={password1} 
-                            name="password1"
+                            value={password} 
+                            name="password"
                             onChange={this.onChange} 
                             rows="3" placeholder="Enter your password"/>
                     </div>
@@ -49,5 +71,7 @@ export class Login extends Component {
         )
     }
 }
-
-export default Login;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+export default connect(mapStateToProps, { login })(Login);

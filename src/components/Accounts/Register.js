@@ -64,7 +64,7 @@ export class Register extends Component {
                     </div>
                         <button type="submit" className="btn btn-success mt-2">Submit</button>
                         <p className="">Already have an account?
-                            <Link to="/login">Log In</Link>
+                            <Link to="/">Log In</Link>
                         </p>
                     </form>
                 </div>

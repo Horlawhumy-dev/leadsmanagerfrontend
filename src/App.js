@@ -1,20 +1,27 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import Header from './components/layouts/Header';
 import Dashboard  from './components/leads/Dashboard';
 import Account from './components/Accounts/Account';
 import PrivateRoutes from './components/Common/PrivateRoutes';
+import store from './Store/store'
+import { loadUser } from './Store/actions/auth'
 import { useAlert } from 'react-alert';
 
 
-function App() {
- const alert = useAlert()
-  return (
+class App extends Component {
+  
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
+
+  render(){
+    return (
       <Router>
         <Fragment>
           <Header />
           <div className="container">
-            <PrivateRoutes exact path="/">
+            <PrivateRoutes path="/dashboard">
               <Dashboard />
             </PrivateRoutes>
             <Account />
@@ -22,6 +29,8 @@ function App() {
         </Fragment>
       </Router>
   );
+  }
+  
 }
 
 export default App;

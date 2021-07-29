@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { tokenConfig } from './auth';
 import { GET_LEADS, ADD_LEAD, DELETE_LEAD} from './types';
 
-export const getLeads = () => dispatch => {
-    axios.get('http://localhost:8000/api/leads')
+export const getLeads = () => (dispatch, getState) => {
+    axios.get('http://localhost:8000/api/leads', tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: GET_LEADS,
@@ -12,13 +13,13 @@ export const getLeads = () => dispatch => {
         .catch(err => console.log(err))
 }
 
-export const addLead = lead => dispatch => {
+export const addLead = lead => (dispatch, getState)=> {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     }
-    axios.post('http://localhost:8000/api/leads/', lead, config)
+    axios.post('http://localhost:8000/api/leads/', lead, tokenConfig(getState))
     .then(res => {
         dispatch({
             type: ADD_LEAD,
@@ -28,8 +29,8 @@ export const addLead = lead => dispatch => {
     .catch(err => console.error(err))
 } 
 
-export const deleteLead = id => dispatch => {
-    axios.delete(`http://localhost:8000/api/leads/${id}/`)
+export const deleteLead = id => (dispatch, getState) => {
+    axios.delete(`http://localhost:8000/api/leads/${id}/`, tokenConfig(getState))
     .then(res => {
         dispatch({
             type: DELETE_LEAD,

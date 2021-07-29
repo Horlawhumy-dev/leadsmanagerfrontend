@@ -1,21 +1,47 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {registerUser} from '../../Store/actions/auth'
+import PropTypes from 'prop-types'
+
+
 export class Register extends Component {
     state = {
         username: "",
         email: "", 
-        password1: "",
+        password: "",
         password2: ""
+    }
+   
+    static propTypes = {
+        registerUser: PropTypes.func.isRequired,
+        isAuthenticated: PropTypes.bool
     }
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value})
     }
     onSubmit = e => {
         e.preventDefault();
-        console.log(this.state);
+        const {username, password, password2, email} = this.state;
+        if(password !== password2){
+            alert('Passwords do not match!!')
+        }else{
+            this.props.registerUser({username, password, email})
+            
+        }
+
+        this.setState({
+            username: '',
+            password: '',
+            password2: '',
+            email: ''
+        })
     }
     render() {
-       const {username, email, password1, password2} = this.state;
+        if(this.props.isAuthenticated){
+            return <Redirect exact to="/" />
+        }
+       const {username, email, password, password2} = this.state;
         return (
             <div className="container">
                 <h3>Create Account</h3>
@@ -47,8 +73,8 @@ export class Register extends Component {
                                 type="password"
                                 className="form-control" 
                                 id="exampleFormControlTextarea1"
-                                value={password1} 
-                                name="password1"
+                                value={password} 
+                                name="password"
                                 onChange={this.onChange} 
                                 rows="3" placeholder="Enter your password"/>
                     </div>
@@ -72,4 +98,7 @@ export class Register extends Component {
     }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+export default connect(mapStateToProps, {registerUser})(Register);

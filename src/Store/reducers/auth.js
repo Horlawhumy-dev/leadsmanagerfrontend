@@ -22,6 +22,7 @@ const auth = function(state=initialState, action){
                 user: action.payload
             }
         case actiontTypes.LOGIN_SUCCESS:
+        case actiontTypes.REGISTER_SUCCESS:
             localStorage.setItem('token', action.payload.token)
             return {
                 ...state,
@@ -31,6 +32,8 @@ const auth = function(state=initialState, action){
             }
         case actiontTypes.AUTH_ERROR:
         case actiontTypes.LOGIN_FAIL:
+        case actiontTypes.LOGOUT_SUCCESS:
+        case actiontTypes.REGISTER_FAIL:
             localStorage.removeItem('token')
             return {
                 ...state,
